@@ -29,16 +29,23 @@ return false;
 
 // Read data using username and password
 public function login($username, $password) {
-		$this->db->where('username', $username);
-		$this->db->where('password', $password);
-		
-		$result = $this->db->get('users');
-		$result = $result->result_array();
-		
-		if (strcmp($result[0]['password'], $password != 0)){
-			return FALSE;
-		}
-		return TRUE;
+		$this->db->where('username',$username);
+        $result = $this->db->get('users');
+        
+        $result = $result->result_array();
+        
+
+        
+        if(strcmp($result[0]['password'], $password) != 0) {
+            return FALSE;
+                        
+        }
+        
+        else {   
+        
+        return $result;
+        
+        }   
 	}
 
 // Read data from database to show data in admin page
@@ -123,6 +130,15 @@ return false;
     }
 }
     }
+
+    public function getUserInfo(){
+        $id = $this->session->userdata('idnumber');
+        $this->db->where('idnumber', $id);
+        $this->db->from('users');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
 
 ?>

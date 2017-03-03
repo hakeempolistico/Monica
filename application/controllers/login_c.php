@@ -15,14 +15,20 @@ class Login_c extends CI_Controller {
 	// Show login page
 	public function index() 
 	{
-	$this->load->view('login_v');
+		$li = $this->session->userdata('logged_in');
+		if($li == TRUE){
+			redirect ('index.php/home/index');
+		}
+		else{
+			$this->load->view('login_v');
+		}
+	
 	}
 
 	// Show registration page
 	public function registermo() {
 	$this->load->view('studentregister');
 	}
-
 
 	
 	// Validate and store registration data in database
@@ -61,7 +67,6 @@ class Login_c extends CI_Controller {
 	}else{
 		$result = $this->users_model->registration_insert($data);
 	if ($result == TRUE) {
-	echo 'Registration Successful!';
 	$this->load->view('success', $data);
 	} else {
 	echo 'Username already exist!';
@@ -72,69 +77,46 @@ class Login_c extends CI_Controller {
 	}
 
 	// Check for user login process
-	public function user_login_process() {
-
-	$this->form_validation->set_rules('user.name', 'Username', 'trim|required|xss_clean');
-	$this->form_validation->set_rules('pass.word', 'Password', 'trim|required|xss_clean');
-
-	if ($this->form_validation->run() == FALSE) {
-	if(isset($this->session->userdata['login2_v'])){
-	$this->load->view('home');
-	}else{
-		echo 'ito naaa';
-	$this->load->view('login2_v');
-	}
-	} else {
-	$data = array(
-	'username' => $this->input->post('user.name'),
-	'password' => $this->input->post('pass.word')
-	);
-	$result = $this->users_model->login($data);
-	if ($result == TRUE) {
-
-	$username = $this->input->post('user.name');
-	$result = $this->users_model->read_user_information($username);
-	if ($result != false) {
-	$session_data = array(
-	'username' => $result[0]->username,
-	'emailadd' => $result[0]->e_address,
-	);
-	// Add user data in session
-	$this->session->set_userdata('login2_v', $session_data);
-	$this->load->view('home');
-	}
-	} else {
-	$data = array(
-	'error_message' => 'Invalid Username or Password'
-	);echo 'Invalid Username or Password';
-	$this->load->view('login2_v', $data);
-	}
-	}
-	}
 
 	
  	 public function process(){
 
-			if ($this->input->post())
+			$this->load->helper(array('form', 'url'));
+			$this->load->library('form_validation');
+			$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+			$this->form_validation->set_rules('username', 'Username', 'required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+		
+		if ($this->form_validation->run() == FALSE)
+			{
+				echo "wrong password";
+			}
+		
+		
+		else
 		{
-			$this->load->model('users_model');
-			
-			$data = $this->input->post();
-			$this->users_model->login($data['username'], $data ['password']);
-			
-			$result=$this->users_model->login($data['username'], $data ['password']);
-			
-			if($result) {
+			if ($this->input->post())
+			{
+				$this->load->model('users_model');				
+				$data = $this->input->post();
+				$this->users_model->login($data['username'], $data ['password']);
+		
+				$result=$this->users_model->login($data['username'], $data ['password']);
 				
-				redirect('index.php/login_c/incorrect');
-			}
-			else {
+				if(!$result) {
+					redirect ('index.php/login_c/incorrect');
+				}
 				
-				redirect ('index.php/home/');
+				else {
+					$newdata = array(
+			        'logged_in' => TRUE,
+			        'idnumber' => $result['0']['idnumber']
+					);
+					$this->session->set_userdata($newdata);
+					redirect ('index.php/home/index');
+				}
+				
 			}
-			
-			echo $result;
-			exit();
 		}
 		
 		
@@ -142,14 +124,14 @@ class Login_c extends CI_Controller {
 
 	// Logout from admin page
 	public function logout() {
-
+	$this->session->unset_userdata('logged_in');
 	// Removing session data
 	$sess_array = array(
 	'username' => ''
 	);
-	$this->session->unset_userdata('login2_v', $sess_array);
+	$this->session->unset_userdata('login_v', $sess_array);
 	$data['message_display'] = 'Successfully Logout';
-	$this->load->view('login2_v', $data);
+	redirect ('', $data);
 	}
 
 	public function iloginmo()
@@ -158,11 +140,21 @@ class Login_c extends CI_Controller {
 	}
 	public function balikmo()
 	{
-		$this->load->view('login2_v');
+		redirect ('');
 	}
 	public function incorrect()
 	{
 		$this->load->view('xlogin');
+	}
+	public function status(){
+		$this->load->model('post_model');
+			
+			if($this->input->post()) {
+			$data = $this->input->post();	
+
+			$result = $this->post_model->post_status($data);
+			redirect('home/index');
+		}
 	}
 	
 
