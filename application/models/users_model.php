@@ -130,7 +130,11 @@ return false;
     }
 }
     }
-
+    public function UserInfo(){
+        $this->db->from('users');
+        $query = $this->db->get();
+        return $query->result();
+    }
     public function getUserInfo(){
         $id = $this->session->userdata('idnumber');
         $this->db->where('idnumber', $id);
@@ -138,7 +142,66 @@ return false;
         $query = $this->db->get();
         return $query->result();
     }
+    public function getUserInfo2($userid){
+        $this->db->where('idnumber', $userid);
+        $this->db->from('users');
+        $query = $this->db->get();
+        return $query->result();
+    }
 
+    public function members(){
+        $id = $this->session->userdata('idnumber');
+        $this->db->select("*");
+        $this->db->from('users');
+        $this->db->where('idnumber !=', $id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function users(){
+        $id = $this->session->userdata('idnumber');
+        $this->db->select("*");
+        $this->db->from('users');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function profilepic($data) {
+        $id = $this->session->userdata('idnumber');
+        $this->db->delete('profilepic', array('idnumber' => $id));
+        $this->db->insert('profilepic', $data);
+    }
+    public function coverpic($data) {
+        $this->db->insert('coverphotos', $data);
+    }
+
+    public function search($search){
+     $this->db->select('*');
+     $this->db->from('users');
+     $this->db->like('username',$search);
+     $this->db->or_like('fname',$search);
+     $this->db->or_like('lname',$search);
+     $this->db->or_like('mname',$search);
+     $query = $this->db->get();
+     foreach ($query->result_array() as $row)
+            {
+                $memb = $row['idnumber'];
+                }
+    $error = 'There is no record for the one you searched. Please go Back.';
+    $query1 = $this->db->query("SELECT * FROM users WHERE idnumber ='$memb'");
+    $hehe = $query1->result_array();
+    if($hehe==NULL){
+            echo $error; exit;  
+        } else {
+     return $memb;
+    }
+}
+    public function searchgrp($search){
+     $this->db->select('*');
+     $this->db->from('groups');
+     $this->db->like('group_name',$search);
+     $this->db->or_like('group_creator',$search);
+     $query = $this->db->get();
+     return $query->result();
+    }
 }
 
 ?>

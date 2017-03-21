@@ -33,6 +33,7 @@
     <link href="<?php echo base_url()?>css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
+    <link href="<?php echo base_url()?>css/gridprofiles.css" rel="stylesheet">
     <link href="<?php echo base_url()?>css/design.css" rel="stylesheet">
     <link href="<?php echo base_url()?>css/fonts.css" rel="stylesheet">
     
@@ -62,8 +63,9 @@
     margin-right: 10px;  
 }
 #rcorners2 {
+    border: 2px #000 solid;
     border-radius: 25px;
-    background: #eee;
+    background: #fcf8e3;
     padding: 20px; 
     width: 100%;
     height: 100%;
@@ -107,7 +109,7 @@ table, td{
                   <span class="icon-bar"></span>
                 </button>
               </div>
-              <a class="navbar-brand page-scroll" href="studie"><b>StockOverflowing</b></a>
+              <a class="navbar-brand page-scroll" href="index"><b>StockOverflowing</b></a>
               <ul class="nav navbar-nav navbar-left">
                 <form class="navbar-form" role="search">
                   <div class="input-group">
@@ -119,7 +121,7 @@ table, td{
               </ul>
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="studie"><i class="fa fa-user"> PROFILE</a></i></li>
+                  <li><a href="index"><i class="fa fa-user"> PROFILE</a></i></li>
                   <li><a href="#"><i class="fa fa-globe"> NOTIFICATIONS</a></i></li>
                   <li class="active"><a href="aboutie"><i class="fa fa-exclamation-circle"> ABOUT</a></i></li>
                   <li class="dropdown">
@@ -175,7 +177,7 @@ table, td{
                 </div>
 
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-2" style="padding: 10px">
                     <div class="team-member">
                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal2"><img src="<?php echo base_url()?>images/imgstudent.png" class="img-responsive" alt=""></button> <h4> Ms. Stemely Joy Bertolano</h4>
             <br>
@@ -189,7 +191,7 @@ table, td{
                 </div>
 
                  <div class="row">
-                <div class="col-sm-5">
+                <div class="col-2" style="padding: 10px">
                     <div class="team-member">
                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal3"><img src="<?php echo base_url()?>images/tin.jpg" class="img-responsive" alt=""></button> <h4>Ms. Christine Canimo</h4>
             <br>
@@ -203,7 +205,7 @@ table, td{
                 </div>
 
                  <div class="row">
-                <div class="col-sm-5">
+                <div class="col-2" style="padding: 10px">
                     <div class="team-member">
                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal4"><img src="<?php echo base_url()?>images/imgstudent.png" class="img-responsive" alt=""></button><h4> Mr. John Robert Capistrano</h4>
             <br>
@@ -217,7 +219,7 @@ table, td{
                 </div>
 
                  <div class="row">
-                <div class="col-sm-5">
+                <div class="col-2" style="padding: 10px">
                     <div class="team-member">
                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal5"><img src="<?php echo base_url()?>images/imgteacher.png" class="img-responsive" alt=""></button><h4> Mr. John Patrick Guzman</h4>
             <br>
@@ -238,7 +240,7 @@ table, td{
 
 <!-- Modal -->
   <div class="modal" id="myModal2" role="dialog">
-    <div class="modal-dialog2">
+    <div class="modal-dialog1">
 
        <!-- Modal content-->
       <div class="modal-content">
@@ -262,7 +264,7 @@ table, td{
 
   <!-- Modal -->
   <div class="modal" id="myModal3" role="dialog">
-    <div class="modal-dialog2">
+    <div class="modal-dialog1">
 
        <!-- Modal content-->
       <div class="modal-content">
@@ -286,7 +288,7 @@ table, td{
 
   <!-- Modal -->
   <div class="modal" id="myModal4" role="dialog">
-    <div class="modal-dialog2">
+    <div class="modal-dialog1">
 
        <!-- Modal content-->
       <div class="modal-content">
@@ -309,7 +311,7 @@ table, td{
             </div> 
             <!-- Modal -->
   <div class="modal" id="myModal5" role="dialog">
-    <div class="modal-dialog2">
+    <div class="modal-dialog1">
 
        <!-- Modal content-->
       <div class="modal-content">

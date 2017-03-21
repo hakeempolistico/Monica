@@ -7,7 +7,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Home</title>
+    <title>
+    <?php foreach($details as $detail){?>
+    <?php echo $detail->fname." ";?><?php echo $detail->mname." ";?><?php echo $detail->lname." ";?><?php }?></title>
+    <?php echo smiley_js(); ?>
     <style> 
 #rcorners {
     background: #000;
@@ -19,11 +22,10 @@
     margin-right: 10px;  
 }
 #rcorner {
-    background: #000;
+    background: #000; 
     padding: 2px; 
-    width: 100%;
-    height: 100%;
-    float: right;  
+    width: 65px;
+    height: left;  
     margin-left: 0px;
     margin-right: 0px;  
 }
@@ -49,6 +51,21 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script> 
+$(document).ready(function(){
+    $("#flip").click(function(){
+        $("#panel").slideToggle("slow");
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+    $("label").click(function(){
+        $("p").toggle();
+    });
+});
+</script>
   </head>
   <style> 
 #rcorners1 {
@@ -83,19 +100,73 @@
     margin-top: 150px;
 }
 .modal-dialog2 {
-    width: 600px;
-    margin-left: 350px;
-    margin-top: 100px;
+    width: 400px;
+    margin-left: 420px;
+    margin-top: 130px;
+}
+.modal-dialog3 {
+    width: 500px;
+    height: 100%;
+    margin-left: 404px;
+    margin-top: 130px;
+}
+#panel, #flip {
+    padding: 5px;
+    background-color: #fcf8e3;
+    border: solid 1px #c3c3c3;
+    width: 267px;
+}
+
+#panel {
+    padding: 5px;
+    display: none;
+    overflow: auto;
+    height: 200px;
+}
+.panelcomment, #comment {
+    background-color: #fcf8e3;
+    width: 440px;
+}
+
+.panelcomment {
+    padding: 3px;
+    display: none;
+    /* overflow: auto; */
+    height: 100%;
+    border: 1px #000;
+    box-shadow: none;
+
+}
+
+#panelsmiley {
+    padding: 3px;
+    display: none;
+    width:100px;
+    height: 100%;
+    border: 1px #000;
+    box-shadow: none;
+    float: right;
+    margin-right: 60px;
+    margin-top: 5px;
+
+}
+.fontRed{
+  color: red;
+}
+.fontBlack{
+  color: black;
 }
 img
 {
-  width: 1340px;
-  height: 410px;
+  width: 19px;
+  height: 19px;
   vertical-align:baseline;
+
 }
 textarea {
     resize: none;
 }
+
 @media (min-width: 768px)
 {header {
   margin-top: 70px;
@@ -104,13 +175,8 @@ textarea {
   position: relative;
   width:auto;
 }}
-table, td{
-    padding: 80px;
-    text-align: center;
-    float: center;
-}
 </style>
-  <body>
+  <body style="background-color: #ece8ce">
         <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
     <div id="rcorners">
@@ -124,26 +190,27 @@ table, td{
           <span class="icon-bar"></span>
         </button>
         </div>
-          <a class="navbar-brand page-scroll" href="index"><b>StockOverflowing</b></a>
+          <a class="navbar-brand page-scroll" href="home"><b>StockOverflowing</b></a>
           <ul class="nav navbar-nav navbar-left">
-          <form class="navbar-form" role="search">
+          <form action="<?php echo base_url(); ?>home/search" method="post" role="search">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search" name="q">
-              <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
+            <input type="text" name="search" class="form-control" placeholder="Search">
             </div>
-          </form>
+            <div class="input-group">
+            <input type="submit" value="search" name="save"/>
+            </div>
+            </form>
         </ul>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+              <li><a href="home"><i class="fa fa-home"> HOME</a></i></li>
               <li class="active"><a href="index"><i class="fa fa-user"> PROFILE</a></i></li>
               <li><a href="#"><i class="fa fa-globe"> NOTIFICATIONS</a></i></li>
               <li><a href="aboutie"><i class="fa fa-exclamation-circle"> ABOUT</a></i></li>
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <p><li><a bgcolor="black" href="accsetting">Account Settings</a></li></p>
+                    <p><li><a bgcolor="black" href="accsetting">Edit Profile</a></li></p>
                     <li><a bgcolor="black" href="#" class="button" data-toggle="modal" data-target="#myModal">Logout</a></li>
             </ul>
           </div>
@@ -157,21 +224,26 @@ table, td{
     <div id="rcorners1">
     <div class="row">
                 <div class="col-lg-10">
-                       <img src="<?php echo base_url()?>images/1.jpg" class="img-responsive1" alt=""></button>
+                <div class="cover">
+                      <?php foreach($details as $detail){?>
+                       <img src="<?php echo base_url();?>images/usercover<?php echo $detail->idnumber;?>_.jpg" class="img-responsive1" alt=""></button>
+                        <?php }?>
                       </div>
                     </div>
                 </div>
                 </div>
   </figure>
+  <?php foreach($details as $detail){?>
   <figure class="profile-picture" 
-    style="background-image: url('<?php echo base_url()?>images/tin.jpg')">
+    style="background-image: url('<?php echo base_url();?>images/user<?php echo $detail->idnumber;?>_.jpg')">
+    <?php }?>
   </figure>
   <div class="profile-stats">
     <ul>
-      <li>13    <span>Projects</span></li>
-      <li>1,354 <span>Commits</span></li>
-      <li>32    <span>Following</span></li>
-      <li>324   <span>Followers</span></li>
+      <li><?php foreach($posts as $post){?><?php echo $post->no_of_status." ";?><span>Posts</span><?php }?></li>
+      <li><?php foreach($grpnumbers as $grpnumber){?><?php echo $grpnumber->no_groups." ";?> <span>Groups</span><?php }?></li>
+      <li>32    <span>Friends</span></li>
+      <li>324   <span>Files</span></li>
     </ul>
   </div>
 </header>
@@ -180,7 +252,7 @@ table, td{
   <ul>
     <?php foreach($details as $detail){?>
     <li>
-    <?php echo $detail->fname." ";?> <?php echo $detail->mname." ";?><?php echo $detail->lname;?>
+    <?php echo $detail->fname." ";?><?php echo $detail->mname." ";?><?php echo $detail->lname." ";?>
     <li>
     <?php echo $detail->gender." ";?>
     </li>
@@ -192,48 +264,156 @@ table, td{
     </li>
     <?php }?></li>
   </ul>
-
+<br>
+  <div id="flip"><h3>Group List</h3></div>
+    <div id="panel" class="menu form-control input-md">
+        <?php foreach($groups as $group){?>
+            <label><a style="color: black" href="group/<?php echo $grp_id =  $group->group_id." " ;?>"><?php echo $group->group_name." ";?></a></label>
+            <a href="" data-toggle="modal" data-target="#myModal1" style="float: right;">Leave</a>
+            <br>
+            <?php }?>
+    </div>
+      </form>
+  <div class="reply">
+ <a style="text-align: center; float:right; margin-right: 50px;margin-top: 20px" href=""  data-toggle="modal" data-target="#creategroup">CREATE GROUP</a>
 </div>
-
+</div>
  
-<div class="col-7 nav2">
+ <div class="col-8 nav2">
   <ul>
-     <li><a class="active" href="groups">Groups</a></li>
     <li><a href="files">Files</a></li>
-    <li><a href="friends">Friends</a></li>
+    <li><a href="members">Members</a></li>
     <li style="float:right"><a href="edit">Edit Profile</a></li>
   </ul>
 </div>
-<div class="col-5 dashboard">
-<div class="col-13 status">
+
+<div class="col-6 dashboard">
+<div class="col-5 status">
   <h2><font color="black">Status</h2>
   <form action="status" method="POST">  
   <input value="" type="hidden" name="stat_id">
-  <input type="hidden" name="user_id" value ="<?php echo $this->session->userdata('idnumber'); ?>">
-  <input type="hidden" name="post_date" value="<?php date_default_timezone_set("Asia/Manila"); echo date("Y/m/d h:i:sa") ?>">
-  <textarea placeholder="ux2 na ni acoe mamatay" cols="66" rows="5" name="text"></textarea>
-  <input type="submit" value="POST<3"></button>
+  <input type="hidden" name="idnumber" value ="<?php echo $this->session->userdata('idnumber'); ?>">
+  <input type="hidden" name="post_date" value="<?php date_default_timezone_set("Asia/Manila"); echo date("Y/m/d"); ?>">
+  <input type="hidden" name="post_time" value="<?php echo date("h:i:sa"); ?>">
+  
+  <textarea placeholder="EVEEENTS" id="status" cols="50" rows="5" name="text"></textarea>
+<div class="reply" style="padding-top: 10px;">
+ <input type="submit" value="POST<3" style="margin-right: 10px;">
+ <a data-toggle="collapse" data-parent="#accordion" href="#smiley">
+    <img src="<?php echo base_url();?>images/smileys/emoticon.png" style=" width: 20px;height: 20px;vertical-align: text-bottom;"></a>
+  <div id="smiley" class="collapse" style="float: right;padding-top: 5px;">
+      <?php echo $smiley_table1; ?></div>
+ </div>
 </div>
 </form>
-<div class="col-13 status" >
-John Robert C. Capistrano
+
+
+
+<?php foreach($status as $status){?>
+<div class="col-5 status" >
+<table>
+<tr><td>
+<?php foreach($details as $detail){?>
+<img src="<?php echo base_url();?>images/user<?php echo $detail->idnumber;?>_.jpg" style=" width: 65px;height: 65px;
+  vertical-align:baseline;"></td><td>
+<h3>&nbsp;&nbsp;&nbsp;
+<?php echo $detail->fname." ";?><?php echo $detail->mname." ";?><?php echo $detail->lname." ";?></h3>
+<?php }?>
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $status->post_date." ";?> <?php echo $status->post_time." ";?></h5>
+</td></tr></table>
+<br><h4>
+<?php echo $status->text." ";?></h4>
+<hr style="margin-bottom: 5px;border-top: #000 1px solid;">
+<div class="container">
+<a data-toggle="collapse" data-parent="#accordion" href="#/<?php echo $comment =  $status->stat_id." " ;?>" data-target="#comment<?php echo $status->stat_id;?>"><i class="fa fa-comments-o" style="font-size:15px;color:red;cursor: pointer;"> Comments</i></a>
 </div>
+<div id="comment<?php echo $status->stat_id;?>" class="panel-collapse collapse">
+    <hr style="margin-bottom: 10px;margin-top: 5px;border-top: #000 1px solid;">
+
+    <form action="<?php echo base_url() ?>index.php/home/commentprofile/<?php echo $userid =  $detail->idnumber." " ;?>" method="POST" name="formcomment">
+    <strong><?php echo $detail->fname." ";?></strong>
+    <input type="hidden" name="usercomment_id" value="">
+    <input type="hidden" name="idnumber" value="<?php echo $this->session->userdata('idnumber'); ?>">
+    <input type="hidden" name="status_id" value="<?php echo $status->stat_id;?>">
+    <input type="hidden" name="comment_date" value="<?php date_default_timezone_set("Asia/Manila"); echo date("Y/m/d"); ?>">
+    <input type="hidden" name="comment_time" value="<?php echo date("h:i:sa"); ?>">
+
+    <input type="text" id="comments<?php echo $status->stat_id;?>" name="comments" placeholder="Write a comment" style="width: 250px">
+    <a data-toggle="collapse" data-parent="#accordion" href="#smiley<?php echo $status->stat_id;?>">
+    <img src="<?php echo base_url();?>images/smileys/emoticon.png" style=" width: 20px;height: 20px;vertical-align: text-bottom;"></a>
+    <input type="submit" style="position: absolute; left: -9999px">
+    <div id="smiley<?php echo $status->stat_id;?>" class="collapse" style="float: right;padding-top: 5px;">
+      <?php echo $smiley_tables; ?></div>
+      </form>
+    <hr style="margin-bottom: 10px;margin-top: 10px;">
+
+    <?php foreach($comments as $comment){?>
+        <?php $a = $status->stat_id; $b = $comment->status_id; if($a==$b) { ?>
+    <table width="430px">
+    <tr><td style="padding-right: 5px;" width="40px">
+    <img src="<?php echo base_url();?>images/user<?php echo $comment->idnumber;?>_.jpg" class="img-responsive1" alt="" style="width: 40px;height: 40px;"></td>
+    <td>
+        <font color="#756220"><strong>
+    <?php $a = $status->stat_id; $b = $comment->status_id; if($a==$b) { echo $comment->fname." ";?><?php echo $comment->lname." ";}?></strong></font>
+    <?php $a = $status->stat_id; $b = $comment->status_id; if($a==$b) { echo $comment->comments." ";}?>
+        <h6 style="float: right;margin: 0px;margin-right: 12px; font-size: 13px;">
+    <?php $a = $status->stat_id; $b = $comment->status_id; if($a==$b) { echo $comment->comment_date." ";?>| <?php echo $comment->comment_time." ";}?></h6> </td></tr></table> 
+    
+        <hr style="margin-bottom: 5px;margin-top: 5px;">  
+    <?php } ?>
+    <?php }?>
+    </div>
+</div>
+<?php }?>
 </div>
 
 <div class="col-3 rightside">
 <br>
 <P>Events</P>
-<div class="col-13 events">
-<h3>Groupmoto#1</h3>
-<h6>EB sa Trinoma<br>February 28, 2017<br>Acoe Si EventLeader</h6>
-<a href="" style="float: right;">Attend Event</h4></a>
+<?php foreach($events as $event){?>
+<?php foreach($details as $detail){?>
+<div class="col-2 events">
+<form action="" method="POST">
+<h2><a href = "group/<?php echo $grp_id =  $event->group_id." " ;?>" style="background-color: transparent;box-shadow: none;padding: 0px;"><?php echo $event->group_name." ";?> </a></h2>
+<h4><b>Event Name:</b><?php echo $event->event_name." ";?>
+<br><b>Event Place:</b><?php echo $event->event_place." ";?>
+<br><b>Date:</b><?php echo $event->event_date." ";?>
+<br><b>Event Creator:</b><?php echo $event->event_creator." ";?></h4>
+          
+            <div>
+
+            <div class="">  
+        <a href ="pending?evnt_id=<?php echo $event->event_id." ";?>&idn=<?php echo $event->member_id," ";?>" style="float: right; margin-left: 10px">
+        <font class = "<?php $p = $event->pending." " ; if($p==2){echo "fontRed";}else{echo "fontBlack";}?>">
+             <span class="fa fa-minus-circle" style="font-size:24px"></span>
+            </font>
+          </a>
+          </div> 
+        </div>
+
+            <div class="">      
+            <a href = "notattend?evnt_id=<?php echo $event->event_id." ";?>&idn=<?php echo $event->member_id," ";?>" style="float: right; margin-left: 10px; margin-bottom: 15px;">
+           
+            <font class = "<?php $n = $event->notattending." " ; if($n==1){echo "fontRed";} else{echo "fontBlack";}?>">
+              <span class="fa fa-times-circle" style="font-size:24px"></span> 
+            </font>
+            </a>
+          </div>
+
+          
+            <div class="">  
+        <a href ="attend?evnt_id=<?php echo $event->event_id." ";?>&idn=<?php echo $event->member_id," ";?>" style="float: right;">
+        <font class = "<?php $a = $event->attending." " ; if($a==1){echo "fontRed";}else{echo "fontBlack";}?>">
+             <span class="fa fa-check-circle" style="font-size:24px"></span>
+            </font>
+          </a>
+          </div> 
 </div>
-<div class="col-13 events">
- <h3>Groupmoto#2</h3>
-<h6>EB sa MOA<br>MArch 3, 2017<br>Acoe Si EventLeader#2</h6>
-<a href="" style="float: right;">Attend Event</h4></a>
+<?php }?> 
+<?php }?>
+
 </div>
-</div>
+
 
 <div class="col-3 rightside">
 <P><font color="darkgray">Anything2</p></font>
@@ -246,49 +426,46 @@ Chania is the capital of the Chania region on the island of Crete. The city can 
 </div>
 </div>
 </div>
- <!-- Modal -->
-  <div class="modal fade" id="event" role="dialog">
+
+   <!-- Modal -->
+  <div class="modal fade" id="creategroup" role="dialog">
     <div class="modal-dialog">
 
        <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h3 class="modal-title">Create Event</h3></center>
+          <center><h3 class="modal-title">Create Group</h3></center>
         </div>
-
+        
         <div class="modal-body">
           <div class="form-group">
-            <label>Event Creator:</label>
-            <input type="text" class="form-control input-md" placeholder="Name of Event">
-          </div>
-
-          <div class="form-group">
-            <label>Event Place:</label>
-            <input type="text" class="form-control input-md" placeholder="Venue of the Event">
-          </div>
-
-          <div class="form-group">
-            <label>Event Date:</label>
-            <input type="date" class="form-control input-md" placeholder="Date of event">
-          </div>
-
-          <div class="modal-footer">
-            <center><a href="logout" class="btn btn-default">Create</a></button></center>
+          <form action="creategroup" method="POST">
+            <input type="hidden" value="" name="group_id">
+            <?php foreach($details as $detail){?>
+            <input type="hidden" value="<?php echo $detail->fname." ";?><?php echo $detail->mname." ";?><?php echo $detail->lname." ";?>" name="group_creator"><?php }?>
+            <input type="hidden" name="idnumber" value ="<?php echo $this->session->userdata('idnumber'); ?>">
+            <input type="hidden" name="date_created" value="<?php date_default_timezone_set("Asia/Manila"); echo date("Y/m/d h:i:sa"); ?>">
+            <input type="hidden" name="no_members" class="form-control input-md" value="1">
+            <label>Group Name:</label>
+            <input type="text" name="group_name" class="form-control input-md" placeholder="">
+                <br><br>
+            <input type="submit" class="btn btn-primary" value="Create"> 
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </div>
+    </div>
     
   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog1">
 
        <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title">LOGOUT Confirmation</h4></center>
+          <center><h6 class="modal-title">LOGOUT Confirmation</h6></center>
         </div>
         <div class="modal-body">
           <center><p>Are you sure you want to logout?</p></center>
@@ -303,8 +480,36 @@ Chania is the capital of the Chania region on the island of Crete. The city can 
     </div>
   </div>
 
-  
-  <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+ <!-- Modal -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog1">
+
+       <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Leave Group Confirmation</h4>
+        </div>
+        <div class="modal-body">
+         <p>Are you sure you want to leave this group?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="<?php echo base_url();?>index.php/home/leave" class="btn btn-primary">Yes</a></button>
+          <a class="btn btn-primary" data-dismiss="modal">No</a></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+    function myFunction() {
+    document.getElementById("field<?php echo $user->idnumber;?>").value = document.getElementById("field<?php echo $user->idnumber;?>").value;
+}
+</script>
+
+ <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
   <script src="js/index.js"></script>
  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

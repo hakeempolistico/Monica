@@ -107,7 +107,7 @@ table, td{
           <span class="icon-bar"></span>
         </button>
         </div>
-          <a class="navbar-brand page-scroll" href="studie"><b>StockOverflowing</b></a>
+          <a class="navbar-brand page-scroll" href="index"><b>StockOverflowing</b></a>
           <ul class="nav navbar-nav navbar-left">
           <form class="navbar-form" role="search">
             <div class="input-group">
@@ -120,13 +120,13 @@ table, td{
         </ul>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="studie"><i class="fa fa-user"> PROFILE</a></i></li>
+                <li><a href="index"><i class="fa fa-user"> PROFILE</a></i></li>
                 <li><a href="#"><i class="fa fa-globe"> NOTIFICATIONS</a></i></li>
                 <li><a href="aboutie"><i class="fa fa-exclamation-circle"> ABOUT</a></i></li>
                 <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <p><li><a bgcolor="black" href="">Account Settings</a></li></p>
+                    <p><li><a bgcolor="black" href="accsetting">Edit Profile</a></li></p>
                     <li><a bgcolor="black" href="#" class="button" data-toggle="modal" data-target="#logout">Logout</a></li>
                   </ul>
               </ul>
@@ -137,46 +137,53 @@ table, td{
 
   <br><br><br><br>
   <div class="container">
-
-    <div class="form-group">
+    <?php foreach($details as $detail){?>
+    <div class="form-group" style="width: 600px;margin-left: 230px;margin-top: 30px;">
       <form action="register_validation" method="POST">
 
         <div class="form-group">
           <label style="float: left">Username:</label>
-          <input type="text" class="form-control input-md" placeholder="Enter Username" name="username" required/>
+          <input type="text" value="<?php echo $detail->username;?>" class="form-control input-md" placeholder="Enter Username" name="username" required/>
         </div>
 
         <div class="form-group">
-          <label style="float: left">Password:</label>
-          <input type="password" class="form-control input-md" placeholder="Enter Password" name="password" required/>
+          <label style="float: left">Old Password:</label>
+          <input type="password" class="form-control input-md" placeholder="Enter Old Password" name="password" required/>
+        </div>
+
+        <div class="form-group">
+          <label style="float: left">Retype Old Password:</label>
+          <input type="password" class="form-control input-md" placeholder="Enter Old Password" name="password" required/>
+        </div>
+
+        <div class="form-group">
+          <label style="float: left">New Password:</label>
+          <input type="password" class="form-control input-md" placeholder="Enter New Password" name="password1" required/>
         </div>
 
         <label style="float: left">First Name:</label>
-        <input type="text" class="form-control input-md" placeholder="Enter First Name" name="firstname" required/>
-                 
+        <input type="text" value="<?php echo $detail->fname;?>" class="form-control input-md" placeholder="Enter First Name" name="fname" required/>
+
         <label style="float: left">Middle Name:</label>
-        <div class="form-group">
-          <input type="text" class="form-control input-md" placeholder="Enter Middle Name" name="mname" required/>
-        </div>
+        <input type="text" value="<?php echo $detail->mname;?>" class="form-control input-md" placeholder="Enter Middle Name" name="mname" required/>
 
         <label style="float: left">Last Name:</label>
-        <div class="form-group">
-          <input type="text" class="form-control input-md" placeholder="Enter Last Name" name="lastname" required/>
-        </div>
+        <input type="text" value="<?php echo $detail->lname;?>" class="form-control input-md" placeholder="Enter Last Name" name="lname" required/>
 
         <label style="float: left">City Address:</label>
         <div class="form-group">
-         <input type="text" class="form-control input-md" placeholder="Enter City Address" name="address" required/>
+         <input type="text" value="<?php echo $detail->address;?>" class="form-control input-md" placeholder="Enter City Address" name="address" required/>
         </div>
 
         <label style="float: left">Email Address:</label>
         <div class="form-group">
-          <input type="email" class="form-control input-md" placeholder="Enter Email Address" name="e_address" required/>
+          <input type="email" value="<?php echo $detail->emailadd;?>" class="form-control input-md" placeholder="Enter Email Address" name="e_address" required/>
         </div>
 
         <div class="form-group">
           <label style="float: left">Gender:&nbsp</label>
           <select name="gender" style="float: left">
+            <option value="gender" name="gender" required=""><?php echo $detail->gender;?></option>
             <option value="Male" name="gender" required="">Male</option>
             <option value="Female" name="gender" required="">Female</option>
           </select>
@@ -184,12 +191,12 @@ table, td{
 
         <div class="form-group"><br><br>
           <label style="float: left">Contact:</label>
-          <input type="text" class="form-control input-md" placeholder="Enter Contact" name="contact" required/>
+          <input type="text" value="<?php echo $detail->contact;?>" class="form-control input-md" placeholder="Enter Contact" name="contact" required/>
         </div>
 
         <label style="float: left">Birthday:</label></font>
         <div class="form-group">
-          <input type="date" class="form-control input-md" placeholder="Enter Birthday" name="bday" required/>
+          <input type="date" value="<?php echo $detail->bday;?>" class="form-control input-md" placeholder="Enter Birthday" name="bday" required/>
         </div>
 
         <div class="form-group">
@@ -198,6 +205,7 @@ table, td{
 
       </form>
      </div>
+      <?php }?>
   </div>
 
   <div class="modal fade" id="logout" role="dialog">
